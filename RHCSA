@@ -1,0 +1,11 @@
+[Managing Networking] 
+Please create new network connection with existing interface (enp1s0) using provided values: • IPv4: 172.25.X.10/255.255.255.0 (where X is your domain number: Domain1) • Gateway: 172.25.X.2 • DNS server: 172.25.X.2 Add the following secondary IP addresses statically to your current running connection. Do this in a way that does not compromise your existing settings: • IPv4: 10.0.0.5/24 and set the hostname servera.lab.example.com 
+Answer:
+[root@test1 ~]# nmcli connection show NAME UUID TYPE DEVICE LAN 12e1286c-e24b-46b6-aeee-925736aac2fa ethernet eth0
+[root@test1 ~]# nmcli connection modify LAN ipv4.addresses 172.25.250.10/24 ipv4.gateway 172.25.250.254 ipv4.dns 172.25.254.254 Connection 'LAN' (12e1286c-e24b-46b6-aeee-925736aac2fa ) successfully modified.
+[root@test1 ~]# nmcli connection modify LAN ipv4.method manual
+[root@test1 ~]# nmcli connection up LAN Connection successfully activated (D-Bus active path: /org/freedesktop/NetworkManager/ActiveConnection/4)
+[root@test1 ~]# nmcli connection show NAME UUID TYPE DEVICE LAN0798b00a-7a53-4c2c-a4ab-b3ba07d783b8 ethernet eth0
+Set up hostname ==================== 
+[root@test1 ~]# hostnamectl set-hostname servera.lab.example.com 
+[root@test1 ~]# hostnamectl status
